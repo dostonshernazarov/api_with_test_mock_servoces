@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package product;
+
+service ProductService {
+  rpc CreateProduct(Product) returns (Product);
+  rpc UpdateProduct(Product) returns (Product);
+  rpc GetProductByID(IdRequest) returns (Product);
+  rpc GetAllProducts(GetAllProductRequest) returns (GetAllProdRes);
+  rpc DeleteProductByID(IdRequest) returns (DeleteProductByIDRespons);
+  rpc CreateProductUser(ProductUser) returns (ProductUser);
+  rpc GetAllProductUserByUserId(GetAllProductUserByUserIdReq) returns (GetAllProductsRespons);
+  rpc UpdateProductUserByID(ProductUser) returns (ProductUser);
+  rpc DeleteProductUserByID(IdRequest) returns (DeleteProductByIDRespons);
+}
+message GetAllProductUserByProductIdRes {
+  repeated ProductUserRes products_user = 1;
+}
+
+message GetAllProdRes {
+  repeated Product products = 1;
+}
+
+message ProductUserRes{
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  string price = 5;
+  string contact_info = 6;
+  string user_id = 7;
+}
+
+
+message User{
+  string id = 1;
+  string full_name = 2;
+  string city = 3;
+  string email = 4;
+  string password = 5;
+  string phone = 6;
+  string role = 7;
+  string refresh_token = 8;
+}
+
+message GetAllProductUserByProductIdReq {
+  string product_id = 1;
+  int64 page = 2;
+  int64 limit = 3;
+}
+
+message GetAllProductUserByUserIdReq{
+  string user_id = 1;
+  int64 page = 2;
+  int64 limit = 3;
+}
+
+message ProductUser {
+  string id = 1;
+  string product_id = 2;
+  string user_id = 3;
+}
+
+message DeleteProductByIDRespons{
+  string result = 1;
+}
+
+message GetAllProductsRespons{
+  User user = 1;
+  repeated Product products = 2;
+}
+
+message GetAllProductRequest{
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message IdRequest{
+  string id = 1;
+}
+
+message Product{
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string category = 4;
+  string price = 5;
+  string contact_info = 6;
+}

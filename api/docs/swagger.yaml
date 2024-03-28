@@ -1,0 +1,710 @@
+definitions:
+  models.CreateUserRoleRequest:
+    properties:
+      method:
+        type: string
+      path:
+        type: string
+      role_name:
+        type: string
+    type: object
+  models.Error:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      category:
+        type: string
+      contact_info:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: string
+    type: object
+  models.RegisterModel:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+    type: object
+  models.RegisterResponseModel:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.StandardErrorModel:
+    properties:
+      error:
+        $ref: '#/definitions/models.Error'
+    type: object
+  models.User:
+    properties:
+      code:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      refresh_token:
+        type: string
+    type: object
+  models.UserLoginRequest:
+    properties:
+      password:
+        type: string
+      user_name_or_email:
+        type: string
+    type: object
+  models.UserOrder:
+    properties:
+      id:
+        type: string
+      product_Id:
+        type: string
+      user_id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /v1/order:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of users
+      parameters:
+      - description: userID
+        in: query
+        name: userID
+        required: true
+        type: string
+      - description: Page
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetAllProductUserByUserId
+      tags:
+      - order
+  /v1/order/:
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new user order product
+      parameters:
+      - description: createUserOrder
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserOrder'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: CreateUserProduct
+      tags:
+      - order
+  /v1/order/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Api deletes user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: DeleteProductUserByID
+      tags:
+      - order
+    put:
+      consumes:
+      - application/json
+      description: Api returns updates user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UserOrder
+        in: body
+        name: UserOrder
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserOrder'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: UpdateProductUserByID
+      tags:
+      - order
+  /v1/product/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of products
+      parameters:
+      - description: Page
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: ListProducts
+      tags:
+      - product
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new user
+      parameters:
+      - description: CreateProduct
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: CreateProduct
+      tags:
+      - product
+  /v1/product/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Api deletes product
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: DeleteProduct
+      tags:
+      - product
+    get:
+      consumes:
+      - application/json
+      description: Api for getting product by id
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetProductByID
+      tags:
+      - product
+    put:
+      consumes:
+      - application/json
+      description: Api returns updates product
+      parameters:
+      - description: UpdateProduct
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: UpdateProduct
+      tags:
+      - product
+  /v1/rbac/add-user-role:
+    post:
+      consumes:
+      - application/json
+      description: Create new user-role
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateUserRoleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateUserRoleRequest'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Create new user-role
+      tags:
+      - rbac
+  /v1/rbac/policy:
+    get:
+      consumes:
+      - application/json
+      description: This API gets list of policies
+      parameters:
+      - description: Role
+        in: query
+        name: role
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Get list of policeis
+      tags:
+      - rbac
+  /v1/rbac/roles:
+    get:
+      consumes:
+      - application/json
+      description: This API get list of roles
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Get list of roles
+      tags:
+      - rbac
+  /v1/users/:
+    get:
+      consumes:
+      - application/json
+      description: Api returns list of users
+      parameters:
+      - description: Page
+        in: path
+        name: page
+        required: true
+        type: integer
+      - description: Limit
+        in: path
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: ListUser
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Api for creating a new user
+      parameters:
+      - description: CreateUser
+        in: body
+        name: Product
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: CreateUser
+      tags:
+      - user
+  /v1/users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Api deletes user
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: DeleteUser
+      tags:
+      - user
+    get:
+      consumes:
+      - application/json
+      description: Api for getting user by id
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: GetUser
+      tags:
+      - user
+    put:
+      consumes:
+      - application/json
+      description: Api returns updates user
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: UpdateUser
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: UpdateUser
+      tags:
+      - user
+  /v1/users/login:
+    post:
+      consumes:
+      - application/json
+      description: LogIn - Api for login users
+      parameters:
+      - description: User Login
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: LogIn User
+      tags:
+      - registr
+  /v1/users/retoken:
+    get:
+      consumes:
+      - application/json
+      description: Refresh token - Api for verification users
+      parameters:
+      - description: retoken
+        in: query
+        name: retoken
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RegisterResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: RefreshAccessToken User
+      tags:
+      - token
+  /v1/users/signup:
+    post:
+      consumes:
+      - application/json
+      description: Registr - Api for registring users
+      parameters:
+      - description: UserDetail
+        in: body
+        name: registr
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegisterModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RegisterModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: Registr
+      tags:
+      - registr
+  /v1/users/verify:
+    get:
+      consumes:
+      - application/json
+      description: LogIn - Api for verification users
+      parameters:
+      - description: Email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: Code
+        in: query
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.RegisterResponseModel'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.StandardErrorModel'
+      summary: Verification User
+      tags:
+      - registr
+swagger: "2.0"
